@@ -58,9 +58,6 @@ Don't forget to modify the app.py file to add your db credentials and ofcourse y
 Add the credential to a '.env' file.
 
 
-Add the tables to the database 'c' given in the tables.txt file
-
-
 #### Note:- This project is not meant to be used in production
 
 
