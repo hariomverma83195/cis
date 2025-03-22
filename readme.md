@@ -55,7 +55,7 @@ Don't forget to modify the app.py file to add your db credentials and ofxourse y
 
 ```or``` 
 
-Add the credential to an env and use it in that.
+Add the credential to a '.env' file.
 
 
 add the tables to the database 'c' given in the tables.txt file
