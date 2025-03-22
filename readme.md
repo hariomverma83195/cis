@@ -61,10 +61,10 @@ Add the credential to a '.env' file.
 #### Note:- This project is not meant to be used in production
 
 
-
-### Project By Team Astro
-
 ## Other requirements
 
 - [x] Create folder "input/whole_imgs" if not exists.
 - [x] Also create "results/res" folder if not exists.
+
+
+### Project By Team Astro
