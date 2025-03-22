@@ -51,14 +51,14 @@ Make sure to choose the suitable version from their website and install it yours
 
 Setup user privilleges and create database named 'c'
 
-Don't forget to modify the app.py file to add your db credentials and ofxourse you can change the database name
+Don't forget to modify the app.py file to add your db credentials and ofcourse you can change the database name
 
 ```or``` 
 
 Add the credential to a '.env' file.
 
 
-add the tables to the database 'c' given in the tables.txt file
+Add the tables to the database 'c' given in the tables.txt file
 
 
 #### Note:- This project is not meant to be used in production
