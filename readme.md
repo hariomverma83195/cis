@@ -1,7 +1,3 @@
-# Shhhh....🤫 Let's not leak our hardwork
-(Do not share this repo)
-
-
 ## Home Page
 
 ![Home](https://github.com/hariomverma83195/cis/blob/main/assets/homepage.jpg?raw=true)
