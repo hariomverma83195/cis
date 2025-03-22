@@ -30,7 +30,7 @@ Clone this repository and install the requirements using the following command
 (Recommended installing requirements in virtual environment)
 
 ```console
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 
