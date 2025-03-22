@@ -47,7 +47,7 @@ pip install -r requirements.txt
 Make sure to choose the suitable version from their website and install it yourself
 
 
-## After that setup MySQL
+## Setup MySQL
 
 Setup user privilleges and create database named 'c'
 
@@ -61,7 +61,7 @@ Add the credential to an env and use it in that.
 add the tables to the database 'c' given in the tables.txt file
 
 
-#### Note:- This project is not mean't to be used in production
+#### Note:- This project is not meant to be used in production
 
 
 
