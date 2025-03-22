@@ -4,22 +4,22 @@
 
 ## Home Page
 
-![Home](https://github.com/hariomverma83195/cds_byteamastro/blob/main/assets/homepage.jpg?raw=true)
+![Home](https://github.com/hariomverma83195/cis/blob/main/assets/homepage.jpg?raw=true)
 
 
 ## Admin Pane
 
-![Admin Paned](https://github.com/hariomverma83195/cds_byteamastro/blob/main/assets/admin_panel.jpg?raw=true)
+![Admin Paned](https://github.com/hariomverma83195/cis/blob/main/assets/admin_panel.jpg?raw=true)
 
 
 ## Match
 
-![Match](https://github.com/hariomverma83195/cds_byteamastro/blob/main/assets/output_matchm.jpg?raw=true)
+![Match](https://github.com/hariomverma83195/cis/blob/main/assets/output_matchm.jpg?raw=true)
 
 
 ## Clear
 
-![Clear](https://github.com/hariomverma83195/cds_byteamastro/blob/main/assets/output_clear.jpg?raw=true)
+![Clear](https://github.com/hariomverma83195/cis/blob/main/assets/output_clear.jpg?raw=true)
 
 
 
