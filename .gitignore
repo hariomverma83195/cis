@@ -1,0 +1,11 @@
+.venv
+venv
+env
+.env
+test.html
+test123.py
+__pycache__
+.venvc
+*.pth
+.DS_Store
+.vscode

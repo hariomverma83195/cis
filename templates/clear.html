@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS - Admin</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">            
+        <div>
+            <div class="sidebar__logo">
+                
+                <h2 class="sidebar__logo-header">CIS - Admin</h2>    
+            </div>
+            <ul class="side-nav">
+                <span class="side-nav__header">Main Menu</span>
+                <li class="side-nav__item">         
+                    <span><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; Match</span>
+                </li>
+                <li class="side-nav__item side-nav__item-active">                       
+                    <span><i class="fa-solid fa-eraser"></i>&nbsp;Clear Only</span>
+                </li>
+                <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-camera"></i>&nbsp;From Video</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fa-solid fa-upload"></i>&nbsp;Clear &amp; Add record</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fas fa-edit"></i>&nbsp;Edit Record</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-table"></i>&nbsp;Add Record</span>
+                </li>
+                <li class="side-nav__item">                   
+                    <span><i class="fa-solid fa-trash"></i>&nbsp;Delete Record</span>
+                </li>
+                <li class="side-nav__item">       
+                    <span><i class="fas fa-search"></i>&nbsp;Search Records</span>
+                </li>
+            </ul>
+
+            <ul class="side-nav">
+                <span class="side-nav__header">Admin</span>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-user-gear"></i>&nbsp;Settings</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fas fa-users"></i>&nbsp;Users</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="far fa-address-card"></i>&nbsp;About Us</span></li>
+            </ul>
+
+        </div>   
+    </nav>
+
+    <main class="main-content">
+        <div class="top-container">
+            <div action="#" class="search">
+                <i class="fas fa-search"></i>&nbsp;      
+                <input type="text" class="search__input" placeholder="Search record in database">           
+            </div>
+            <div class="user-nav">
+                
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" id="userName">Name</span>                        
+                </div>
+                <span id="logout"><i class="fas fa-sign-out" style="cursor:pointer"></i></span>      
+            </div>
+        </div>
+        <div class="bottom-container" id="loading1" style="background-color: white !important; height: 100%; display: none; justify-content: center;">
+            <img src="{{ url_for('static', filename='assets/loading.gif') }}" alt="l" height="190px">
+        </div>
+        <div class="bottom-container" id="content2">
+            <div class="containermax containerClr">
+                <div class="cIContainer">
+                    <div class="sideImg">
+                        <img src="{{ url_for('static', filename='assets/blurimg.png') }}" alt="">
+                    </div>
+                </div>
+                <div class="containermin">
+                    <div class="box">
+                        <div class="img">
+                            <label for="uploadnonblr">
+                                <i class="fa-solid fa-image"></i>
+                                <br>
+                                Drag or choose image
+                                <input type="file" name="uploadnonblr" id="uploadNonBlur">
+                            </label>
+                        </div>
+                        <div>
+                            <span>Image to clear....</span><br />
+                            <button class="uploadImgBtn" id="uploadforclearOnly" onclick="afg()"><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script>
+let uploadforclearOnly = document.querySelector("#uploadforclearOnly")
+let afg = () => {
+    document.getElementById("loading1").style.display = "flex";
+    document.getElementById("content2").style.display = "none";
+    // Assuming you have an input field with type="file" in your HTML with id="imageInput"
+    const file = document.getElementById('uploadNonBlur').files[0];
+    
+    // Create a FormData object to store the file
+    const formData = new FormData();
+    formData.append('image', file);
+
+    // Send a POST request to the /clear_image route with the FormData containing the image
+    fetch('/clear_image_only', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to upload image');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data["gender"])
+        window.location.href = home + "/clearonly/" + data["gender"];
+        console.log(data); // Log the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error.message); // Log any errors
+    });
+};
+
+document.querySelector(".search").addEventListener("change", (event) => {
+        window.location.href = home+ahrefs[7] + "/" + event.target.value;
+    })
+    document.getElementById("userName").innerText = localStorage.getItem("user")
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+</script>
+</body>
+</body>
+</html>

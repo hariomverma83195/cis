@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="mainBox">
+        <div class="userData" style="flex-direction: column; gap:10px">
+            <div class="imageContains1" style="width: 100%; display: flex; justify-content: center; align-items: center; gap:30px">
+            <h2>Confirm Deleting record</h2>
+        </div>
+        <div style="display: flex; gap: 40px;">
+            <div class="btnClose" id="returnToHome" style="margin-top: 10px">
+                Close
+            </div>
+            <div class="btnClose" onclick="submitToDelete(event)" id="{{deleteID}}" style="margin-top: 10px; background-color: tomato;">
+                Delete
+            </div>
+        </div>
+        </div>
+        <div class="loading">
+            <img src="{{ url_for('static', filename='assets/loading.gif') }}" alt="loading">
+        </div>
+    </div>
+    <nav class="sidebar">            
+        <div>
+            <div class="sidebar__logo">
+                
+                <h2 class="sidebar__logo-header">CIS - Admin</h2>    
+            </div>
+            <ul class="side-nav">
+                <span class="side-nav__header">Main Menu</span>
+                <li class="side-nav__item">         
+                    <span><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; Match</span>
+                </li>
+                <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-eraser"></i>&nbsp;Clear Only</span>
+                </li>
+               <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-camera"></i>&nbsp;From Video</span>
+                </li>
+               
+                <li class="side-nav__item">                  
+                    <span><i class="fa-solid fa-upload"></i>&nbsp;Clear &amp; Add record</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fas fa-edit"></i>&nbsp;Edit Record</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-table"></i>&nbsp;Add Record</span>
+                </li>
+                <li class="side-nav__item">                   
+                    <span><i class="fa-solid fa-trash"></i>&nbsp;Delete Record</span>
+                </li>
+                <li class="side-nav__item">       
+                    <span><i class="fas fa-search"></i>&nbsp;Search Records</span>
+                </li>
+            </ul>
+
+            <ul class="side-nav">
+                <span class="side-nav__header">Admin</span>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-user-gear"></i>&nbsp;Settings</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fas fa-users"></i>&nbsp;Users</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="far fa-address-card"></i>&nbsp;About Us</span></li>
+            </ul>
+
+        </div>   
+    </nav>
+
+    <main class="main-content">
+        <div class="top-container">
+            <div action="#" class="search">
+                <i class="fas fa-search"></i>&nbsp;      
+                <input type="text" class="search__input" placeholder="Search record in database">           
+            </div>
+            <div class="user-nav">
+                
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" id="userName">Name</span>                        
+                </div>
+                <span id="userArrow"><span id="logout"><i class="fas fa-sign-out" style="cursor:pointer"></i></span>  </span>    
+            </div>
+        </div>
+        <div class="bottom-container">
+       
+        </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script>
+
+let back = document.querySelector("#returnToHome")
+
+back.addEventListener("click", () => {
+    window.location.href = home + ahrefs[5];
+})
+
+function submitToDelete(event){
+const data = {
+    id: event.target.id
+}
+fetch('/delete_record', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {
+    alert("Done deleting")
+    window.location.href = "/delete"
+    console.log(data.message); // Output success message
+})
+.catch(error => {
+    console.error('Error:', error); // Output error message
+});
+}
+
+document.querySelector(".search").addEventListener("change", (event) => {
+        window.location.href = home+ahrefs[7] + "/" + event.target.value;
+    })
+
+    document.getElementById("userName").innerText = localStorage.getItem("user")
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+</script>
+</body>
+</body>
+</html>

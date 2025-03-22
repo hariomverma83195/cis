@@ -1,0 +1,12 @@
+flask
+pyyaml
+lpips
+argparse
+deepface
+opencv-python
+asyncio
+mysql-connector-python
+tf-keras
+
+
+# Also install the appropriate version of pytorch for your system if not installed automatically

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player with Screenshot</title>
+</head>
+<style>
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+.vidContains {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 30px;
+}
+
+.video-container {
+    position: relative;
+    margin-top: 30px;
+
+    video {
+        min-height: 300px;
+        max-height: 500px;
+    }
+}
+
+.drag-drop-container {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #999;
+    font-size: 1.5rem;
+    text-wrap: wrap;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drag-drop-container.drag-over {
+    background-color: #f0f0f0;
+}
+
+#captureButton {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #7c5cfc;
+    color: white;
+    font-weight: bold;
+}
+
+#captureButton:disabled {
+    background-color: #a491f1;
+    cursor:not-allowed;
+}
+
+
+</style>
+
+
+<body>
+    <div class="bottom-container" id="loading1" style="background-color: white !important; height: 100%; display: none; justify-content: center;">
+        <img src="{{ url_for('static', filename='assets/loading.gif') }}" alt="l" height="190px">
+    </div>
+    <div class="bottom-container" id="content2">
+    <div class="vidContains">
+        <div class="video-container">
+            <video id="videoPlayer" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video><br>
+            <button id="captureButton"><i class="fa-solid fa-camera"></i>&nbsp;Capture and clear</button>
+        </div>
+        <input type="file" id="fileInput" accept="video/mp4" style="display: none;">
+        <div class="drag-drop-container">
+            <i class="fa-solid fa-camera"></i>
+            <p>Drag, or select a video.</p>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let home = window.location.origin;
+    var video = document.getElementById('videoPlayer');
+    var progressBar = document.getElementById('progressBar');
+    var captureButton = document.getElementById('captureButton');
+    var dragDropContainer = document.querySelector('.drag-drop-container');
+    var fileInput = document.getElementById('fileInput');
+    var isDragging = false;
+
+    // Function to update the disabled state of the capture button
+    function updateCaptureButtonState() {
+        if (video.paused) {
+            captureButton.removeAttribute('disabled');
+        } else {
+            captureButton.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    captureButton.addEventListener('click', function() {
+        if (video.paused) {
+            document.getElementById("loading1").style.display = "flex";
+            document.getElementById("content2").style.display = "none";
+            captureScreenshot();
+        } else {
+            alert("Please pause the video before capturing a screenshot.");
+        }
+    });
+
+    
+
+    document.addEventListener('mouseup', function(e) {
+        if (isDragging) {
+            isDragging = false;
+            updateVideoProgress(e);
+        }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if(isDragging) {
+            updateVideoProgress(e);
+        }
+    });
+
+    dragDropContainer.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.add('drag-over');
+    });
+
+    dragDropContainer.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.remove('drag-over');
+    });
+
+    dragDropContainer.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.remove('drag-over');
+        var file = e.dataTransfer.files[0];
+        if (file && file.type === 'video/mp4') {
+            playVideo(file);
+        } else {
+            alert('Please drop a valid video file (MP4)');
+        }
+    });
+
+    dragDropContainer.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (file && file.type === 'video/mp4') {
+            playVideo(file);
+        } else {
+            alert('Please select a valid video file (MP4)');
+        }
+    });
+
+    // Event listener to update the disabled state of the capture button
+    video.addEventListener('play', updateCaptureButtonState);
+    video.addEventListener('pause', updateCaptureButtonState);
+
+    function playVideo(file) {
+        var fileURL = URL.createObjectURL(file);
+        video.src = fileURL;
+        video.play();
+    }
+
+    function updateVideoProgress(e) {
+        var rect = progressBar.getBoundingClientRect();
+        var offsetX = e.clientX - rect.left;
+        var progressBarWidth = progressBar.offsetWidth;
+        var newTime = (video.duration * (offsetX / progressBarWidth)) || 0;
+        video.currentTime = newTime;
+    }
+
+    function captureScreenshot() {
+    var canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert the screenshot to Blob
+    canvas.toBlob(function(blob) {
+        // Create a FormData object and append the screenshot Blob
+        var formData = new FormData();
+        formData.append('image', blob, 'screenshot.png');
+        
+        // Send the FormData object with the screenshot data
+        sendToBackend(formData);
+    });
+}
+
+
+    function sendToBackend(formData) {
+        // Make an AJAX request to send the FormData object to the backend
+        // Example using fetch API
+        fetch('/fromvideo', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to upload screenshot');
+            }
+            return response.json();
+            })
+            .then(response => {
+                console.log(response["gender"])
+                window.location.href = home + "/clearonly/" + response["gender"];
+                console.log(response); // Log the response from the server
+            })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Initial update of the capture button state
+    updateCaptureButtonState();
+});
+
+
+
+    </script>
+</body>
+</html>

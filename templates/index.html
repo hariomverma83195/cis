@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">            
+        <div>
+            <div class="sidebar__logo">
+                
+                <h2 class="sidebar__logo-header">CIS - Admin</h2>    
+            </div>
+            <ul class="side-nav">
+                <span class="side-nav__header">Main Menu</span>
+                <li class="side-nav__item side-nav__item-active">         
+                    <span><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; Match</span>
+                </li>
+                <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-eraser"></i>&nbsp;Clear Only</span>
+                </li>
+               <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-camera"></i>&nbsp;From Video</span>
+                </li>
+               
+                <li class="side-nav__item">                  
+                    <span><i class="fa-solid fa-upload"></i>&nbsp;Clear &amp; Add record</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fas fa-edit"></i>&nbsp;Edit Record</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-table"></i>&nbsp;Add Record</span>
+                </li>
+                <li class="side-nav__item">                   
+                    <span><i class="fa-solid fa-trash"></i>&nbsp;Delete Record</span>
+                </li>
+                <li class="side-nav__item">       
+                    <span><i class="fas fa-search"></i>&nbsp;Search Records</span>
+                </li>
+            </ul>
+
+            <ul class="side-nav">
+                <span class="side-nav__header">Admin</span>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-user-gear"></i>&nbsp;Settings</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fas fa-users"></i>&nbsp;Users</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="far fa-address-card"></i>&nbsp;About Us</span></li>
+            </ul>
+
+        </div>   
+    </nav>
+
+    <main class="main-content">
+        <div class="top-container">
+            <div action="#" class="search">
+                <i class="fas fa-search"></i>&nbsp;      
+                <input type="text" class="search__input" placeholder="Search record in database">           
+            </div>
+            <div class="user-nav">
+                
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" id="userName">Name</span>                        
+                </div>
+                <span id="userArrow"><span id="logout"><i class="fas fa-sign-out" style="cursor:pointer"></i></span>  </span>    
+            </div>
+        </div>
+        <div class="bottom-container" id="loading1" style="background-color: white !important; height: 100%; display: none; justify-content: center;">
+            <img src="{{ url_for('static', filename='assets/loading.gif') }}" alt="l" height="190px">
+        </div>
+        <div class="bottom-container" id="content2">
+
+            <div class="containermin">
+                <div class="dragBtn">
+                    <label for="file">
+                        <i class="fa-solid fa-upload"></i>
+                        <br>
+                        <span id="dragMsg">Drag an image...</span>
+                        <input type="file" name="image2" id="imageInputFile" required>
+                        <br>
+                        <span id="fileName"></span>
+                    </label>
+                </div>
+                <div class="box">
+                    <div class="img">
+                        <img src="{{ url_for('static', filename='assets/img.png') }}" alt="l">
+                    </div>
+                    <div>
+                        <span>Click to upload blurred image....</span>
+                        <button class="uploadImgBtn" id="uploadBlur"><i class="fa-solid fa-upload"></i>&nbsp;Upload Selected</button>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="img">
+                        <label for="uploadnonblr">
+                            <i class="fa-solid fa-image"></i>
+                            <br>
+                            Upload Clear image
+                            <input type="file" name="uploadnonblr" id="uploadNonBlur">
+                        </label>
+                    </div>
+                    <div>
+                        <span>Non blurred image to match....</span>
+                        <button class="uploadImgBtn" id="uploadNonBlurr"><i class="fa-solid fa-image"></i>&nbsp;Find in database</button>
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            <div class="containermin" style="display: flex;">
+                <div class="stats box">
+                    <div class="heading">
+                        <h2>Statistics</h2>
+                        <span class="float-right">&lt;&nbsp;1/1&nbsp;&gt;</span>
+                    </div>
+                    <div class="mini-containermin">
+                        <div class="lastOp">
+                            <span>Last Operation Time: </span>
+                            <span class="progress"></span>
+                            <span id="totalLastOperation">23ms</span>
+                        </div>
+                        <div class="totalInDb">
+                        <div class="fistInDb">
+                            <div class="textcontainermin">Total records:</div>
+                            <div class="outerCircle">
+                                <div class="innerCircle">
+                                    0{{ records }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="secondInDb">
+                            <div class="textcontainermin">Operations:</div>
+                            <div class="outerCircle">
+                                <div class="innerCircle" id="totalOp">
+                                    30
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thirdInDb">
+                            <div class="textcontainermin">Time (In Sec):</div>
+                            <div class="outerCircle">
+                                <div class="innerCircle" id="totalTill">
+                                    20
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script>
+            document.querySelector(".search").addEventListener("change", (event) => {
+        window.location.href = home+ahrefs[7] + "/" + event.target.value;
+    })
+    document.getElementById("userName").innerText = localStorage.getItem("user")
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+
+    // let totalTime = parseInt(localStorage.getItem("totalTill"))
+    // let totalOp = parseInt(localStorage.getItem("totalOp"))
+    // let last = parseInt(localStorage.getItem("totalLastOperation"))
+    document.getElementById("totalLastOperation").innerHTML = last?last:"00ms"
+    document.getElementById("totalTill").innerHTML = totalTime?totalTime:"00s"
+    document.getElementById("totalOp").innerHTML = totalOp?totalOp:"00"
+
+</script>
+</body>
+</body>
+</html>

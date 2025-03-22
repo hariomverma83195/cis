@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+  <div class="navbar navbar1">
+    <div class="navbar-left">
+      <a href="./" class="sitename">CIS</a>
+      <a href="#hero" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#support">Support</a>
+      <a href="#contact">Feedback</a>
+    </div>
+    <div class="navbar-right">
+      <span id="loginBtn" onclick="loginFun()">Login</span>
+      <span class="signup" id="signupBtn" onclick="signupFun()">Signup</span>
+    </div>
+  </div>
+
+  <section class="hero" id="hero">
+    <div class="container-lg">
+      <div class="row align-items-center">
+        <div class="col-sm-6">
+          <h1 class="display-2 fw-bold">Criminal Face Identification System</h1>
+          <p>The criminal face identification system we're implementing in our project uses facial recognition technology to compare faces with a database of known criminals. It helps law enforcement quickly identify suspects.
+          </p>
+          <button class="btn btn-outline-dark btn-lg" style="margin-top:20px"><a href="#about">Read more..</a></button>
+        </div>
+        <div class="col-sm-6 text-center">
+          <img src="{{ url_for('static', filename='assets/homeimg.png') }}" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+      </defs>
+      <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(63, 142, 211,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(124, 92, 252,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(63, 142, 211,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#f1f1f1" />
+      </g>
+  </svg>
+  </section>
+
+
+  <section class="about" id="about">
+    <div class="container">
+      <div>
+      <h2 class="display-5 fw-bold mb-4">About us</h2>
+      <p>Our project focuses on leveraging facial recognition technology to enhance law enforcement's capabilities in
+        identifying suspects swiftly. By comparing faces with a database of known criminals, our system streamlines the
+        process of pinpointing individuals of interest, aiding authorities in their efforts to maintain public safety
+        and combat crime effectively.</p>
+      <p>Our objective is clear: to empower law enforcement with an efficient tool that swiftly identifies and
+        apprehends suspects, ultimately bolstering public safety. Through ongoing innovation and collaboration, we aim
+        to advance criminal face detection technology and support law enforcement agencies globally.</p>
+    </div>
+    <div class="social-container col-sm-4 mt-4 d-flex justify-content-center">
+      <div class="social-media">
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <span class="wave-support">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="background-color: #f1f1f1;">
+      <path fill="#fff" fill-opacity="1" d="M0,288L60,288C120,288,240,288,360,282.7C480,277,600,267,720,245.3C840,224,960,192,1080,176C1200,160,1320,160,1380,160L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+    </svg>
+  </span>
+
+  <section class="support" id="support">
+
+  <div class="min-h-screen py-10 lg:py-0 lg:grid place-content-center">
+    <div class="text-center mb-14 container">
+      <h2 class="display-5 fw-bold mb-4">Support</h2>
+      <p class="text-lg text-gray-700 mt-4 px-2">Have any questions? We'd love to hear from you.</p>
+    </div>
+    <div class="lg:flex items-center justify-center lg:gap-10">
+      <div class="bg-white rounded-lg py-12 px-10 shadow-lg max-w-xs mx-auto lg:mx-0 flex-grow border-t-8 border-blue-400">
+        <div>
+          <h2 class="font-semibold text-2xl text-gray-900">FAQs</h2>
+          <p class="text-gray-400 mt-2.5 text-lg">Want to know the working and other related answers click the button given below</p>
+          <button class="border border-blue-400 text-blue-400 pt-1 pb-1.5 w-full shadow-sm rounded-full inline mt-16 tracking-wider capitalize">visit FAQ page</button>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-lg pt-16 pb-10 px-10 border-t-8 border-green-400 my-5 lg:my-0 shadow-lg max-w-xs mx-auto lg:mx-0 flex-grow">
+        <div>
+          <h2 class="capitalize font-semibold text-2xl text-gray-900">Support</h2>
+          <p class="text-gray-400 mt-2.5 text-lg">Stuck somewhere? Get to know the answers as fast as possible.</p>
+          <button class="border border-green-400 text-white bg-green-400 pt-1 pb-1.5 w-full shadow-sm rounded-full inline tracking-wider capitalize mt-24">visit support page</button>
+          <button class="text-green-400 w-full inline mt-3.5 tracking-wider uppercase text-xs">Contact</button>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-lg py-12 px-10 shadow-lg max-w-xs mx-auto lg:mx-0 flex-grow border-t-8 border-indigo-400">
+        <div>
+          <h2 class="font-semibold text-2xl text-gray-900">Help</h2>
+          <p class="text-gray-400 mt-2.5 text-lg">Get to know how to use CIS tool and the benefits</p>
+          <button class="border border-indigo-400 text-indigo-400 pt-1 pb-1.5 w-full shadow-sm rounded-full inline mt-24 tracking-wider capitalize">Visit Help</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <span class="wave-contact" style="background-color: white;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#f1f1f1" fill-opacity="1" d="M0,288L60,288C120,288,240,288,360,282.7C480,277,600,267,720,245.3C840,224,960,192,1080,176C1200,160,1320,160,1380,160L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+    </svg>
+  </span>
+
+  <section class="contact" id="contact">
+    <div class="container-contact">
+      <div>
+        <div class="row-contact">
+        <h2 class="display-5 fw-bold mb-4">Feedback...</h2>
+        <p>To help the developers improve this useful tool please fill the given form or mail to: <a href="mailto:CIS@mail.admin">CIS@mail.admin</a></p>
+        </div>
+        </div>
+      
+        <section class="contact-us" id="contact-section">
+          <form id="contact" action="" method="post">
+            <div class="inputField">
+              <input type="name" name="name" id="name" placeholder="Your name" autocomplete="on" required>
+              <span class="valid_info_name"></span>
+            </div>
+      
+            <div class="inputField">
+              <input type="Email" name="email" id="email" placeholder="Your email" required="" />
+              <span class="valid_info_email"></span>
+            </div>
+      
+            <div class="inputField">
+              <textarea name="message" id="message" placeholder="Your message"></textarea>
+              <span class="valid_info_message"></span>
+            </div>
+      
+            <div class="inputField btn">
+              <button class="btn btn-outline-dark btn-lg form-submit-btn">Submit..</button>
+            </div>
+      
+          </form>
+        </section>
+
+          </div>
+      </div>
+  </section>
+
+  <section class="footer-svg" style="background-color: #f1f1f1;">
+    <svg width="100%" height="30px" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" overflow="auto" shape-rendering="auto" fill="#f1f1f1">
+      <defs>
+       <path id="wavepath" d="M 0 2000 0 500 Q 149.5 397 299 500 t 299 0 299 0 299 0 299 0 299 0  v1000 z" />
+      </defs>
+      <g>
+       <use xlink:href="#wavepath" y="-409" fill="#5e7a87"></use>
+      </g>
+    </svg>
+  </section>
+
+  <footer class="text-center bg-body-tertiary" style="background-color: #5e7a87; color: white; padding: 20px 0;">
+    <p>&copy; 2024. All Rights Reserved.</p>
+  </footer>
+
+  <div class="logindiv" id="logindiv">
+    <div class="login">
+      <div class="heading">Login</div>
+      <form id="loginForm">
+        <div class="field">
+          <input type="email" id="email" name="email" required>
+          <label>Email ID</label>
+        </div>
+
+        <div class="field">
+          <input type="password" id="password" name="password" required>
+          <label>Password</label>
+        </div>
+
+        <div class="field">
+          <input type="submit" value="Login" onclick="login(event)">
+        </div>
+        <span class="cancelBtn">Cancel</span>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="sigupdiv" id="sigupdiv">
+    <div class="login">
+      <div class="heading">Sign Up</div>
+
+      <form id="signupForm">
+        <div class="field">
+          <input type="text" id="name" name="name" required>
+          <label>Name</label>
+        </div>
+
+        <div class="field">
+          <input type="text" id="department" name="department" required>
+          <label>Department</label>
+        </div>
+
+        <div class="field">
+          <input type="text" id="post" name="post" required>
+          <label>Post</label>
+        </div>
+
+        <div class="field">
+          <input type="email" id="email" name="email" required>
+          <label>Email ID</label>
+        </div>
+
+        <div class="field">
+          <input type="text" id="phone_number" name="phone_number" required>
+          <label>Phone No</label>
+        </div>
+
+        <div class="field">
+          <input type="password" id="password" name="password" required>
+          <label>Set Password</label>
+        </div>
+
+        <div class="field">
+          <input type="submit" value="Sign Up" onclick="signup(event)">
+        </div>
+
+        <span class="cancelBtn">Cancel</span>
+
+
+      </form>
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='home/script.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+</body>
+
+</html>

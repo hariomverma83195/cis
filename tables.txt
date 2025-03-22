@@ -1,0 +1,21 @@
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    department VARCHAR(255),
+    post VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20)
+);
+
+
+CREATE TABLE Persons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    nicknames VARCHAR(255),
+    idMark VARCHAR(255),
+    dob VARCHAR(10),
+    birthplace VARCHAR(255),
+    suspect INT DEFAULT 0,
+    explanation TEXT
+);

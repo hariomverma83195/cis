@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">            
+        <div>
+            <div class="sidebar__logo">
+                <h2 class="sidebar__logo-header">CIS - Admin</h2>    
+            </div>
+            <ul class="side-nav">
+                <span class="side-nav__header">Main Menu</span>
+                <li class="side-nav__item">         
+                    <span><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; Match</span>
+                </li>
+                <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-eraser"></i>&nbsp;Clear Only</span>
+                </li>
+               <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-camera"></i>&nbsp;From Video</span>
+                </li>
+               
+                <li class="side-nav__item">                  
+                    <span><i class="fa-solid fa-upload"></i>&nbsp;Clear &amp; Add record</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fas fa-edit"></i>&nbsp;Edit Record</span>
+                </li>
+                <li class="side-nav__item side-nav__item-active">           
+                    <span><i class="fa-solid fa-table"></i>&nbsp;Add Record</span>
+                </li>
+                <li class="side-nav__item">                   
+                    <span><i class="fa-solid fa-trash"></i>&nbsp;Delete Record</span>
+                </li>
+                <li class="side-nav__item">       
+                    <span><i class="fas fa-search"></i>&nbsp;Search Records</span>
+                </li>
+            </ul>
+
+            <ul class="side-nav">
+                <span class="side-nav__header">Admin</span>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-user-gear"></i>&nbsp;Settings</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fas fa-users"></i>&nbsp;Users</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="far fa-address-card"></i>&nbsp;About Us</span></li>
+            </ul>
+
+        </div>   
+    </nav>
+
+    <main class="main-content">
+        <div class="top-container">
+            <div action="#" class="search">
+                <i class="fas fa-search"></i>&nbsp;      
+                <input type="text" class="search__input" placeholder="Search record in database">           
+            </div>
+            <div class="user-nav">
+                
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" id="userName">Harry</span>                        
+                </div>
+                <span id="logout"><i class="fas fa-sign-out" style="cursor:pointer"></i></span>      
+            </div>
+        </div>
+        <div class="bottom-container">
+            <div class="containeradd">
+                <section class="addRecordForm">
+                    <h1>Add a record:</h1>
+                    <form id="personForm" enctype="multipart/form-data" class="addRecord" onsubmit="submitFormFunction(event)">
+                        <div class="left-img">
+                            <label for="selectProfile">
+                                Drag an image...
+                                <input type="file" name="image" id="image">
+                            </label>
+                        </div>
+                        <div class="right-form">
+                            <label for="name">
+                                Enter fullname name: <br />
+                            <input type="text" name="name" id="name" placeholder="John Doe"><br>
+                            </label>
+                            <label for="nicknames">
+                                Other names (nicknames etc.): <br />
+                            <input type="text" name="nicknames" id="nicknames" placeholder="Nickname"><br>
+                            </label>
+                            <label for="idMark">
+                                Enter identification mark: <br />
+                            <input type="text" name="idMark" id="idMark" placeholder="Mole on neck"><br>
+                            </label>
+                            <label for="dob">
+                                Enter date of birth: <br />
+                            <input type="date" name="dob" id="dob"><br>
+                            </label>
+                            <label for="birthplace">
+                                Place of birth: <br />
+                            <input type="text" name="birthplace" id="birthplace" placeholder="City*"><br>
+                            </label>
+                            <div class="radioSus">
+                                <label>Currently under any charges:</label><br>
+                                <div>
+                                <input type="radio" id="suspectYes" name="suspect" value="1">
+                                <label for="suspectYes">Yes</label>
+                                <input type="radio" id="suspectNo" name="suspect" value="0" checked>
+                                <label for="suspectNo">No</label><br><br>
+                                </div>
+                            </div>
+                                <label for="explaination">
+                                Description <br />
+                                <textarea name="explaination" id="explaination" cols="30" rows="10" placeholder="Enter crimes and description"></textarea>
+                            </label><br />
+                            <input type="submit" value="Submit">
+                            <input type="reset" value="Reset">
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script>
+        document.querySelector(".search").addEventListener("change", (event) => {
+        window.location.href = home+ahrefs[7] + "/" + event.target.value;
+    })
+    document.getElementById("userName").innerText = localStorage.getItem("user")
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+</script>
+</body>
+</body>
+</html>

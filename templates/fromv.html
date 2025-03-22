@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS - Admin</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">            
+        <div>
+            <div class="sidebar__logo">
+                
+                <h2 class="sidebar__logo-header">CIS - Admin</h2>    
+            </div>
+            <ul class="side-nav">
+                <span class="side-nav__header">Main Menu</span>
+                <li class="side-nav__item">         
+                    <span><i class="fa-solid fa-image"></i>&nbsp;Clear &amp; Match</span>
+                </li>
+                <li class="side-nav__item">                       
+                    <span><i class="fa-solid fa-eraser"></i>&nbsp;Clear Only</span>
+                </li>
+                <li class="side-nav__item side-nav__item-active">                       
+                    <span><i class="fa-solid fa-camera"></i>&nbsp;From Video</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fa-solid fa-upload"></i>&nbsp;Clear &amp; Add record</span>
+                </li>
+                <li class="side-nav__item">                  
+                    <span><i class="fas fa-edit"></i>&nbsp;Edit Record</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-table"></i>&nbsp;Add Record</span>
+                </li>
+                <li class="side-nav__item">                   
+                    <span><i class="fa-solid fa-trash"></i>&nbsp;Delete Record</span>
+                </li>
+                <li class="side-nav__item">       
+                    <span><i class="fas fa-search"></i>&nbsp;Search Records</span>
+                </li>
+            </ul>
+
+            <ul class="side-nav">
+                <span class="side-nav__header">Admin</span>
+                <li class="side-nav__item">           
+                    <span><i class="fa-solid fa-user-gear"></i>&nbsp;Settings</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="fas fa-users"></i>&nbsp;Users</span>
+                </li>
+                <li class="side-nav__item">           
+                    <span><i class="far fa-address-card"></i>&nbsp;About Us</span></li>
+            </ul>
+
+        </div>   
+    </nav>
+
+    <main class="main-content">
+        <div class="top-container">
+            <div action="#" class="search">
+                <i class="fas fa-search"></i>&nbsp;      
+                <input type="text" class="search__input" placeholder="Search record in database">           
+            </div>
+            <div class="user-nav">
+                
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" id="userName">Name</span>                        
+                </div>
+                <span id="logout"><i class="fas fa-sign-out" style="cursor:pointer"></i></span>      
+            </div>
+        </div>
+        <div class="bottom-container" id="loading1" style="background-color: white !important; height: 100%; display: none; justify-content: center;">
+            <img src="{{ url_for('static', filename='assets/loading.gif') }}" alt="l" height="190px">
+        </div>
+        <div class="bottom-container" id="content2">
+            <div class="vidContains">
+                <div class="video-container">
+                    <video id="videoPlayer" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video><br>
+                    <button id="captureButton"><i class="fa-solid fa-camera"></i>&nbsp;Capture and clear</button>
+                    <button id="captureButton1"><i class="fa-solid fa-camera"></i>&nbsp;Capture and match</button>
+                </div>
+                <input type="file" id="fileInput" accept="video/mp4" style="display: none;">
+                <div class="drag-drop-container">
+                    <div><i class="fa-solid fa-camera"></i><div>
+                    <div><p>Drag, or select a video.</p><div>
+                </div>
+            </div>
+        
+            </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    let home = window.location.origin;
+    var video = document.getElementById('videoPlayer');
+    var captureButton = document.getElementById('captureButton');
+    var captureButton2 = document.getElementById('captureButton1');
+    var dragDropContainer = document.querySelector('.drag-drop-container');
+    var fileInput = document.getElementById('fileInput');
+    var isDragging = false;
+    video.pause();
+
+    // Function to update the disabled state of the capture button
+    function updateCaptureButtonState() {
+        if (video.paused) {
+            captureButton.removeAttribute('disabled');
+            captureButton2.removeAttribute('disabled');
+        } else {
+            captureButton.setAttribute('disabled', 'disabled');
+            captureButton2.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    captureButton.addEventListener('click', function() {
+        if (video.paused) {
+            document.getElementById("loading1").style.display = "flex";
+            document.getElementById("content2").style.display = "none";
+            captureScreenshot();
+        } else {
+            alert("Please pause the video before capturing a screenshot.");
+        }
+    });
+
+
+    captureButton2.addEventListener('click', function() {
+        if (video.paused) {
+            document.getElementById("loading1").style.display = "flex";
+            document.getElementById("content2").style.display = "none";
+            captureScreenshot2();
+        } else {
+            alert("Please pause the video before capturing a screenshot.");
+        }
+    });
+
+
+    dragDropContainer.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.add('drag-over');
+    });
+
+    dragDropContainer.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.remove('drag-over');
+    });
+
+    dragDropContainer.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dragDropContainer.classList.remove('drag-over');
+        var file = e.dataTransfer.files[0];
+        if (file && file.type === 'video/mp4') {
+            playVideo(file);
+        } else {
+            alert('Please drop a valid video file (MP4)');
+        }
+    });
+
+    dragDropContainer.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (file && file.type === 'video/mp4') {
+            playVideo(file);
+        } else {
+            alert('Please select a valid video file (MP4)');
+        }
+    });
+
+    // Event listener to update the disabled state of the capture button
+    video.addEventListener('play', updateCaptureButtonState);
+    video.addEventListener('pause', updateCaptureButtonState);
+
+    function playVideo(file) {
+        var fileURL = URL.createObjectURL(file);
+        video.src = fileURL;
+        video.play();
+    }
+
+    function captureScreenshot() {
+    var canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert the screenshot to Blob
+    canvas.toBlob(function(blob) {
+        // Create a FormData object and append the screenshot Blob
+        var formData = new FormData();
+        formData.append('image', blob, 'screenshot.png');
+        
+        // Send the FormData object with the screenshot data
+        sendToBackend(formData);
+    });
+}
+
+
+function captureScreenshot2() {
+    var canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert the screenshot to Blob
+    canvas.toBlob(function(blob) {
+        // Create a FormData object and append the screenshot Blob
+        var formData = new FormData();
+        formData.append('image', blob, 'screenshot.png');
+        
+        // Send the FormData object with the screenshot data
+        sendToBackend2(formData);
+    });
+}
+
+
+    function sendToBackend(formData) {
+        // Make an AJAX request to send the FormData object to the backend
+        // Example using fetch API
+        fetch('/fromvideo', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to upload screenshot');
+            }
+            return response.json();
+            })
+            .then(response => {
+                console.log(response["gender"])
+                window.location.href = home + "/clearonly/" + response["gender"];
+                console.log(response); // Log the response from the server
+            })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Initial update of the capture button state
+    updateCaptureButtonState();
+});
+
+
+function sendToBackend2(formData) {
+
+    // Send a POST request to the /clear_image route with the FormData containing the image
+    fetch('/clear_image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to upload image');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data["imageName"] == "nomatch"){
+            alert("No Match Found")
+            localStorage.setItem("totalTill", totalTime?(totalTime+parseInt(data["totalLastOperation"])):"00s");
+            localStorage.setItem("lastOp", parseInt(data["totalLastOperation"]))
+            localStorage.setItem("totalOp", parseInt(totalOp?totalOp+1:"01"))
+            window.location.reload();
+        }else{
+            console.log(data)
+            window.location.href = home + "/match/" + data["imageName"];
+        }
+        console.log(data); // Log the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error.message); // Log any errors
+    });
+}
+
+document.querySelector(".search").addEventListener("change", (event) => {
+        window.location.href = home+ahrefs[7] + "/" + event.target.value;
+    })
+    document.getElementById("userName").innerText = localStorage.getItem("user")
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload()
+    })
+</script>
+</body>
+</body>
+</html>
